@@ -5,16 +5,18 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const handleSubmit = (e) => {
-    e.preventDefault(); 
-    if (username  && password) {
-      setIsLoggedIn(true); 
-      console.log("username")
 
-      setError(""); 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Condition: Only "user" as username and "password" as password is allowed
+    if (username === "user" && password === "password") {
+      setIsLoggedIn(true);
+      setError(""); // Clear any previous errors
+      console.log(username);
     } else {
-      setIsLoggedIn(false); 
-      setError("Invalid username or password"); 
+      setIsLoggedIn(false);
+      setError("Invalid username or password");
     }
   };
 
@@ -29,18 +31,17 @@ export default function LoginForm() {
           alignItems: "center",
           justifyContent: "center",
           width: "100%",
-          height: "100vh",
         }}
       >
         {isLoggedIn ? (
-          <h1>{`Welcome, ${username}!`}</h1> 
+          <h1>{`Welcome, ${username}!`}</h1>
         ) : (
           <form onSubmit={handleSubmit}>
             <label htmlFor="name">Username</label>
             <input
               id="name"
               type="text"
-              placeholder="username"
+              placeholder="Enter username"
               required
               value={username}
               onChange={(e) => setUsername(e.target.value)}
@@ -49,7 +50,7 @@ export default function LoginForm() {
             <input
               id="password"
               type="password"
-              placeholder="password"
+              placeholder="Enter password"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -58,7 +59,7 @@ export default function LoginForm() {
           </form>
         )}
       </main>
-      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>} 
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
     </div>
   );
 }
