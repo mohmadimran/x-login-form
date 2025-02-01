@@ -1,26 +1,29 @@
 import { useState } from "react";
 
 export default function LoginForm() {
-  const [isName, setIsName] = useState("");
-  const [isPassword, setIsPassword] = useState("");
-  const [isError, setIsError] = useState("");
-  const [isShow, setIsShow] = useState(false);
-
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handleSubmit = (e) => {
-    e.preventDefault();
-    if (isName === "user" && isPassword === "password") {
-      setIsShow(true);
-      setIsError("");
+    e.preventDefault(); 
+    if (username  && password) {
+      setIsLoggedIn(true); 
+      console.log("username")
+
+      setError(""); 
     } else {
-      setIsShow(false);
-      setIsError("Invalid username or password");
+      setIsLoggedIn(false); 
+      setError("Invalid username or password"); 
     }
   };
 
   return (
     <div>
-      <h1 style={{ textAlign: "center" }}>Login Page</h1>
-      <div
+      <header style={{ textAlign: "center" }}>
+        <h1>Login Page</h1>
+      </header>
+      <main
         style={{
           display: "flex",
           alignItems: "center",
@@ -29,8 +32,8 @@ export default function LoginForm() {
           height: "100vh",
         }}
       >
-        {isShow ? (
-          <h1>{`Welcome,${isName}!`}</h1>
+        {isLoggedIn ? (
+          <h1>{`Welcome, ${username}!`}</h1> 
         ) : (
           <form onSubmit={handleSubmit}>
             <label htmlFor="name">Username</label>
@@ -39,22 +42,23 @@ export default function LoginForm() {
               type="text"
               placeholder="username"
               required
-              value={isName}
-              onChange={(e) => setIsName(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <label htmlFor="password">Password</label>
             <input
               id="password"
               type="password"
               placeholder="password"
-              value={isPassword}
-              onChange={(e) => setIsPassword(e.target.value)}
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button type="submit">Submit</button>
           </form>
         )}
-      </div>
-      {isError && isError}
+      </main>
+      {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>} 
     </div>
   );
 }
